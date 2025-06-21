@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.Person1 {
+    margin-top: 35px;
+    display:inline-flex;
+    /* background-color: #c87575; */
+    height: 70px;
+    border: 2px solid black;
+.code {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    /* background-color: blue; */
+    border: 1.5px solid black;
+    height: 70px;
+    width: 100px;
+}
+
+.Name {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid black;
+    font-size: 20px;
+    /* background-color: yellow; */
+    height: 70px;
+    width: 150px;
+}
+
+table{
+    border: 1px solid;
+    height: 70px;
+    width: 120px;
+}
+table tr th,td{
+    /* padding: 0 10px; */
+    border: 1.5px solid;
+    text-align: center;
+}
+th{
+    /* padding: 0 10px; */
+    background-color: red;
+    margin-left: 10px;
+}
+td{
+    padding: 0 10px;
+}
+
+.back{
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    height: 25px;
+    width: 60px;
+    font-size: 15px;
+    box-shadow: 3px 3px 10px black;
+    margin-top: -35px;
+    border-radius: 2rem;
+    padding: 3px;
+}
+.back:hover{
+    opacity: 0.7;
+    cursor: pointer;
+    text-align: center;
+    width: 58px;
+}
