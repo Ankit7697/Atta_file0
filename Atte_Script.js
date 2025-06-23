@@ -6,7 +6,7 @@ let TinA = document.querySelector(".Tin");
 let ToutA = document.querySelector(".Tout");
 let subtn = document.querySelector(".subtn");
 let P1 = document.querySelector(".p1");
-// let P2 = document.querySelector(".p2");
+let P2 = document.querySelector(".p2");
 let P3 = document.querySelector(".p3");
 let P4 = document.querySelector(".p4");
 let P5 = document.querySelector(".p5");
@@ -33,6 +33,23 @@ let md = document.querySelector(".md");
 let Np = document.querySelector(".nav2 p");
 let imp = document.querySelector(".imp");
 
+
+
+(function () {
+    person.style.display = "none";
+})();
+
+
+List.addEventListener("click", () => {
+    container.style.display = "none";
+    person.style.display = "";
+});
+
+
+Back.addEventListener("click", () => {
+    person.style.display = "none";
+    container.style.display = "";
+});
 
 
 
@@ -85,69 +102,6 @@ const chamode = () => {
 mode.addEventListener("click", chamode);
 mdp.addEventListener("click", chamode);
 
-
-// console.log(code.innerText, Name.innerText, din.innerText);
-
-// spa.addEventListener("click", () => {
-//     dateA.value = '0000-00-01';
-// });
-
-// spa2.addEventListener("click", () => {
-//     dateA.value += 0000-00-01;
-// })
-
-class fortime {
-    constructor(date, Tin, Tout, OT) {
-        this.date = date;
-        this.Tin = Tin;
-        this.Tout = Tout;
-        this.OT = OT;
-    };
-
-    prin(){
-        console.log(`Date = ${this.date}, InTime = ${this.Tin}, OutTime = ${this.Tout}, OverTime = ${this.OT}`);
-    };
-};
-
-var f = 'x';
-
-try {
-    if (subtn) {
-        subtn.addEventListener("click", () => {
-            if (dateA.value == false || TinA.value == false || ToutA.value == false) {
-                dateA.classList.add("Cred");
-                TinA.classList.add("Cred");
-                ToutA.classList.add("Cred");
-                alert("Please fill all section");
-            } else{
-                dateA.classList.remove("Cred");
-                TinA.classList.remove("Cred");
-                ToutA.classList.remove("Cred");
-                
-                let call = new fortime(dateA.value, TinA.value, ToutA.value, f);
-                console.log(Array(call));
-                call.prin();
-                P4.innerText = Array(call);
-                P1.innerText = dateA.value;
-                
-    			calculateTimeDifference();
-            };
-        });
-    };
-} catch (err){
-    console.log(err);
-};
-
-try{
-    (function () {
-        code.innerText = x;
-        Name.innerText = y;
-    }());
-} catch(err){
-    console.log(err);
-};
-
-
 function calculateTimeDifference() {
     const time1Input = document.getElementById('time1');
     const time2Input = document.getElementById('time2');
@@ -160,6 +114,7 @@ function calculateTimeDifference() {
     
     if (!time1Value || !time2Value) {
     resultSpan.textContent = 'Please select both times.';
+    resultSpan.style.color = "red";
     return;
     }
     
@@ -168,28 +123,32 @@ function calculateTimeDifference() {
     const date1 = new Date(`1970-01-01T${time1Value}:00Z`);
     const date2 = new Date(`1970-01-01T${time2Value}:00Z`);
     const Dtime = new Date(`1970-01-01T${DutyTime}:00Z`);
+
+
+    // console.log(date2.getTime(),"d2");
+    // console.log(date1.getTime(),"d1");
     
     // Calculate the difference in milliseconds
     let diffMilliseconds = date2.getTime() - date1.getTime();
 
-    console.log(diffMilliseconds);
+    // console.log(diffMilliseconds);
     
     let T1 = Dtime.getTime();
-    console.log(T1);
     
+    // console.log(T1);
+
     let T2 = diffMilliseconds - T1;
-    console.log(T2);
+    
     // Handle cases where the second time is earlier than the first on the same day
     if (diffMilliseconds < 0) {
       // Assume the second time is on the next day
       diffMilliseconds += 24 * 60 * 60 * 1000; // Add milliseconds in a day
-    }
+    };
 
     // Handle cases where the second time is earlier than the first on the same day
     if (T2 < 0) {
-        // Assume the second time is on the next day
-        T2 += 24 * 60 * 60 * 1000;
-    }
+        T2 = 0;
+    };
     
     // Convert milliseconds to hours, minutes, and seconds
     const diffHours = Math.floor(diffMilliseconds / (1000 * 60 * 60));
@@ -212,30 +171,13 @@ function calculateTimeDifference() {
 }
 
 
-(function () {
-    person.style.display = "none";
-})();
-
-
-List.addEventListener("click", () => {
-    container.style.display = "none";
-    person.style.display = "";
-});
-
-
-
-Back.addEventListener("click", () => {
-    person.style.display = "none";
-    container.style.display = "";
-});
-
 
 let codelist = {
     A_001 : "Ankit",
     A_002 : "Pinku",
     A_003 : "Pinki",
     A_004 : "Rinki"
-}
+};
 
 
 codein.addEventListener("keyup", () =>{
@@ -274,57 +216,74 @@ namein.addEventListener("keyup", () => {
     };
 });
 
-// class CreateObject {
-//     constructor(EmpCode, EmpName, Att_Date, Att_Tin, Att_Tout) {
-//         this.EmpCode = EmpCode;
-//         this.EmpName = EmpName;
-//         this.Att_Date = Att_Date;
-//         this.Att_Tin = Att_Tin;
-//         this.Att_Tout = Att_Tout;
-//     };
-//     const Object = {
-        
-//     }
-// }
 
 class MyDataClass {
     static existingIds = new Set();
     // Use a Set for efficient uniqueness checks
-    constructor(id, nname, ddate, ttin, ttout) {
-        if (MyDataClass.existingIds.has(id)) {
-                    throw new Error(`ID "${id}" already exists. Please provide a unique ID.`);
-        }
+    constructor(EmpCode, EmpName, Att_Date, Time_In, Time_Out, Total_time, OT_time) {
+        if (MyDataClass.existingIds.has(EmpCode)) {
+            throw new Error(`ID "${EmpCode}" already exists. Please provide a unique ID.`);
+            alert(`Employe Code"${EmpCode}" already exists. \nPlease provide a unique Employe Code`);
+        };
 
-        this.id = id;
-        this.nname = nname;
-        this.ddate = ddate;
-        this.ttin = ttin;
-        this.ttout = ttout;
+        this.EmpCode = EmpCode;
+        this.EmpName = EmpName;
+        this.Att_Date = Att_Date;
+        this.Time_In = Time_In;
+        this.Time_Out = Time_Out;
+        this.Total_time = Total_time;
+        this.OT_time = OT_time;
 
-        MyDataClass.existingIds.add(id);
+        MyDataClass.existingIds.add(EmpCode);
         // Add the new ID to out tracking Set
-    }
-}
+    };
+};
 
 // --- Demonstrating uniqueness Check ---
 
+function Object() {
+    try {
+        const objA = new MyDataClass(codein.value, namein.value, dateA.value, TinA.value, ToutA.value, P2.textContent, P3.textContent);
+        console.log("Created objA:", objA);
+    } catch (error) {
+        console.error(error.message);
+        //Output: ID "ID_001" already exists. Please provide a unique ID.
+    };
+    console.log("Existing IDs:", MyDataClass.existingIds);
+    //Output: Existing IDs: Set(2) {'ID_001', 'ID_002'}
+};
+
 try {
-    const objA = new MyDataClass("ID_002", "Item X", 1, 2, "a");
-    console.log("Created objA:", objA);
+    if (subtn) {
+        subtn.addEventListener("click", () => {
+            if (TinA.value != false && ToutA.value != false) {
+                dateA.classList.remove("Cred");
+                TinA.classList.remove("Cred");
+                ToutA.classList.remove("Cred");
+                P1.innerText = dateA.value;                
+        		calculateTimeDifference();
+                if (codein.value != false && namein.value != false) {
+                    if (dateA.value != false) {
+                        Object();
+                    } else {
+                        dateA.classList.add("Cred");
+                        alert("Please Enter Date");
+                    };
+                };          
+            } else{
+                TinA.classList.add("Cred");
+                ToutA.classList.add("Cred");
+                alert("If you want to Calculate Time \n Please fill Both Time Section");
+            };
+        });
+    };
+} catch (err){
+    console.log(err);
+};
 
-    const objB = new MyDataClass("ID_002", "Item Y", 3, 4, "b");
-    console.log("Created objB:", objB);
 
-    const objC = new MyDataClass("ID_003", "Item Z", 5, 6, "c");
-    console.log("Created objC:", objC);
-} catch (error) {
-    console.error(error.message);
-    //Output: ID "ID_001" already exists. Please provide a unique ID.
-}
 
-console.log("Existing IDs:", MyDataClass.existingIds);
-//Output: Existing IDs: Set(2) {'ID_001', 'ID_002'}
-
+// --- Method 2nd ---
 
 // class MyDataClass {
 //   constructor(id, name, value1, value2, value3) {
