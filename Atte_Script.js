@@ -94,7 +94,7 @@ mdp.addEventListener("click", chamode);
 
 // spa2.addEventListener("click", () => {
 //     dateA.value += 0000-00-01;
-// });
+// })
 
 class fortime {
     constructor(date, Tin, Tout, OT) {
@@ -161,7 +161,7 @@ function calculateTimeDifference() {
     if (!time1Value || !time2Value) {
     resultSpan.textContent = 'Please select both times.';
     return;
-    };
+    }
     
     // Convert time strings to Date objects for easier calculation
     // We use a dummy date (like 1970-01-01) as only the time part matters
@@ -183,13 +183,13 @@ function calculateTimeDifference() {
     if (diffMilliseconds < 0) {
       // Assume the second time is on the next day
       diffMilliseconds += 24 * 60 * 60 * 1000; // Add milliseconds in a day
-    };
+    }
 
     // Handle cases where the second time is earlier than the first on the same day
     if (T2 < 0) {
         // Assume the second time is on the next day
         T2 += 24 * 60 * 60 * 1000;
-    };
+    }
     
     // Convert milliseconds to hours, minutes, and seconds
     const diffHours = Math.floor(diffMilliseconds / (1000 * 60 * 60));
@@ -209,7 +209,7 @@ function calculateTimeDifference() {
 
     resultSpan.textContent = formattedResult;
     ParaOf_OT.textContent = x;
-};
+}
 
 
 (function () {
@@ -248,7 +248,7 @@ codein.addEventListener("keyup", () =>{
                     return;
                 }else {
                     namein.placeholder = "Enter Name...";
-                };
+                }
             };
         }else {
             namein.placeholder = "Enter Name...";
@@ -274,4 +274,99 @@ namein.addEventListener("keyup", () => {
     };
 });
 
-console.log("Check Hosting");
+// class CreateObject {
+//     constructor(EmpCode, EmpName, Att_Date, Att_Tin, Att_Tout) {
+//         this.EmpCode = EmpCode;
+//         this.EmpName = EmpName;
+//         this.Att_Date = Att_Date;
+//         this.Att_Tin = Att_Tin;
+//         this.Att_Tout = Att_Tout;
+//     };
+//     const Object = {
+        
+//     }
+// }
+
+class MyDataClass {
+    static existingIds = new Set();
+    // Use a Set for efficient uniqueness checks
+    constructor(id, nname, ddate, ttin, ttout) {
+        if (MyDataClass.existingIds.has(id)) {
+                    throw new Error(`ID "${id}" already exists. Please provide a unique ID.`);
+        }
+
+        this.id = id;
+        this.nname = nname;
+        this.ddate = ddate;
+        this.ttin = ttin;
+        this.ttout = ttout;
+
+        MyDataClass.existingIds.add(id);
+        // Add the new ID to out tracking Set
+    }
+}
+
+// --- Demonstrating uniqueness Check ---
+
+try {
+    const objA = new MyDataClass("ID_002", "Item X", 1, 2, "a");
+    console.log("Created objA:", objA);
+
+    const objB = new MyDataClass("ID_002", "Item Y", 3, 4, "b");
+    console.log("Created objB:", objB);
+
+    const objC = new MyDataClass("ID_003", "Item Z", 5, 6, "c");
+    console.log("Created objC:", objC);
+} catch (error) {
+    console.error(error.message);
+    //Output: ID "ID_001" already exists. Please provide a unique ID.
+}
+
+console.log("Existing IDs:", MyDataClass.existingIds);
+//Output: Existing IDs: Set(2) {'ID_001', 'ID_002'}
+
+
+// class MyDataClass {
+//   constructor(id, name, value1, value2, value3) {
+//     this.id = id;
+//     this.name = name;
+//     this.value1 = value1;
+//     this.value2 = value2;
+//     this.value3 = value3;
+//   }
+// }
+
+// // A collection to store our created objects and check for uniqueness
+// const myDataCollection = new Map(); // Using a Map to store objects by their ID
+
+// function createMyDataObject(id, name, value1, value2, value3) {
+//   if (myDataCollection.has(id)) {
+//     console.warn(`Attempted to create object with duplicate ID: "${id}". Returning existing object.`);
+//     return myDataCollection.get(id); // Optionally return the existing object
+//     // Or, you could throw an error:
+//     // throw new Error(`ID "${id}" already exists.`);
+//   }
+
+//   const newObject = new MyDataClass(id, name, value1, value2, value3);
+//   myDataCollection.set(id, newObject); // Store the new object in our collection
+//   return newObject;
+// }
+
+// // --- Demonstrating Uniqueness Check with Factory Function ---
+
+// const dataObj1 = createMyDataObject("ITEM_A", "First Item", 100, 200, "foo");
+// console.log("Created dataObj1:", dataObj1);
+
+// const dataObj2 = createMyDataObject("ITEM_B", "Second Item", 150, 250, "bar");
+// console.log("Created dataObj2:", dataObj2);
+
+// const dataObj3 = createMyDataObject("ITEM_A", "Duplicate Item", 300, 400, "baz"); // Attempting to create with existing ID
+// console.log("Result of dataObj3 creation attempt:", dataObj3); // Will be the same as dataObj1 if returning existing
+
+// console.log("\nAll objects in collection:");
+// myDataCollection.forEach((value, key) => {
+//   console.log(`ID: ${key}, Object:`, value);
+// });
+
+// // Verify if dataObj1 and dataObj3 are the same object reference
+// console.log("dataObj1 === dataObj3:", dataObj1 === dataObj3);
