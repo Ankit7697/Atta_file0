@@ -273,3 +273,5 @@ namein.addEventListener("keyup", () => {
         };
     };
 });
+
+console.log("Check Hosting");
